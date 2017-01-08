@@ -9,7 +9,7 @@ The `samples` directory has sample programs that can be run directly. Just clone
 The samples use Python 3 and require three libraries:
 
 1. OpenCV
-2. numpy (rquired by OpenCV)
+2. numpy (required by OpenCV)
 3. pynetworktables
 
 These can all be installed with pip3.
