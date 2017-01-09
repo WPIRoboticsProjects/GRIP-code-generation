@@ -5,7 +5,7 @@ Sample program that uses a generated GRIP pipeline to detect red areas in an ima
 """
 
 import cv2
-from ntcore import NetworkTables
+from networktables import NetworkTables
 from grip import GripPipeline
 
 
