@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="grip_sample1" basedir="." default="jar">
+	
+	<property environment="env"/>
+	<!--
+	    To build and run this sample, you must define the following environment variables:
+	    OPENCV_LIB = the directory containing all OpenCV native libraries
+	    OPENCV_JAR = the JAR file providing the OpenCV wrapper methods for Java
+	-->
+	
+    <property name="source.dir"     value="src/main/java"/>
+    <property name="lib.dir"        value="lib"/>
+	<property name="build.dir"      value="build"/>
+    <property name="tmp.dir"        value="${build.dir}/tmp"/>
+    <property name="class.dir"      value="${tmp.dir}/jar"/>
+    <property name="jar.file"       value="${build.dir}/${ant.project.name}.jar"/>
+    <property name="main-class"     value="grip.sample1.FindRedAreasApp"/>
+
+    <path id="libraries.path">    
+    	<fileset file="${env.OPENCV_JAR}" />
+    </path>
+
+    <target name="clean" description="delete old files">
+        <delete dir="${tmp.dir}"/>
+        <delete file="${jar.file}"/>
+    </target>
+
+    <target name="compile" description="build class files" depends="clean">
+        <mkdir dir="${class.dir}"/>
+        <javac srcdir="${source.dir}" destdir="${class.dir}">
+            <classpath refid="libraries.path"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${class.dir}"/>
+    	<unzip dest="${class.dir}">
+    	    <patternset>
+    	        <exclude name="**/MANIFEST.MF"/>
+    	    </patternset>
+    		<fileset file="${env.OPENCV_JAR}" />
+    	</unzip>
+        <jar destfile="${jar.file}" basedir="${class.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>  
+    </target>
+
+    <target name="run" depends="jar">
+    	<echo message="java -Djava.library.path=${env.OPENCV_LIB} -jar ${jar.file}"/>
+        <java jar="${jar.file}" fork="true">
+        	<sysproperty key="java.library.path" path="${env.OPENCV_LIB}"/>
+        </java>
+    </target>
+
+</project>

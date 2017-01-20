@@ -1,3 +1,11 @@
 .idea/
 *.pyc
 */__pycache__/*
+/.project
+/.classpath
+/.settings/
+/java/target/
+/java/.gradle/
+/java/build/
+/java/bin/
+.DS_Store
